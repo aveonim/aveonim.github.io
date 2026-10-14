@@ -457,6 +457,9 @@ samplePyBtn.addEventListener('click', () => {
 
 clearTextBtn.addEventListener('click', () => {
   textInput.value = '';
+  languageSelect.value = 'auto';
+  titleInput.value = 'none';
+  windowTitle.textContent = 'none';
   renderCode();
 });
 
