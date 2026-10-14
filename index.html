@@ -3,15 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aveonim | Projects & Support</title>
+  <title>Aveonim | 공사중</title>
   <style>
     :root {
       --bg: #121316;
       --card-bg: #1c1e24;
       --text-main: #f0f2f5;
       --text-sub: #9ba1b0;
-      --accent: #e5a93c; /* 아버님 니트 톤의 웜 옐로우 */
-      --accent-hover: #f3bc57;
+      --accent: #e5a93c; /* 머스타드 웜 옐로우 */
       --border: #2e323b;
     }
 
@@ -26,194 +25,123 @@
       background-color: var(--bg);
       color: var(--text-main);
       display: flex;
+      align-items: center;
       justify-content: center;
-      padding: 40px 20px;
       min-height: 100vh;
+      padding: 24px;
     }
 
     .container {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px 32px;
+      max-width: 520px;
       width: 100%;
-      max-width: 680px;
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     }
 
-    /* Profile Section */
-    .profile {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
+    .avatar-wrapper {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 24px;
     }
 
     .avatar {
-      width: 128px;
-      height: 128px;
+      width: 140px;
+      height: 140px;
       border-radius: 50%;
       object-fit: cover;
       border: 3px solid var(--accent);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      display: block;
     }
 
-    .profile h1 {
-      font-size: 1.8rem;
+    .badge {
+      position: absolute;
+      bottom: -6px;
+      right: -6px;
+      background-color: var(--accent);
+      color: #121316;
+      font-size: 1.1rem;
+      padding: 4px 8px;
+      border-radius: 12px;
+      border: 2px solid var(--card-bg);
+    }
+
+    h1 {
+      font-size: 1.7rem;
       font-weight: 700;
+      margin-bottom: 12px;
       letter-spacing: -0.5px;
     }
 
-    .profile p {
+    .status-tag {
+      display: inline-block;
+      background-color: rgba(229, 169, 60, 0.15);
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 18px;
+    }
+
+    p {
       color: var(--text-sub);
       font-size: 0.95rem;
-      line-height: 1.5;
+      line-height: 1.6;
+      margin-bottom: 28px;
     }
 
-    /* Section Cards */
-    .section-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 12px;
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .contact {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
     }
 
-    .card-list {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .card {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 18px 20px;
-      text-decoration: none;
-      color: inherit;
-      transition: transform 0.15s ease, border-color 0.15s ease;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      border-color: var(--accent);
-    }
-
-    .card-info h3 {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .card-info p {
-      font-size: 0.85rem;
+    .contact-label {
+      font-size: 0.8rem;
       color: var(--text-sub);
-    }
-
-    .arrow {
-      color: var(--text-sub);
-      font-size: 1.1rem;
-    }
-
-    /* Contact / Support */
-    .contact-box {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-    }
-
-    .contact-box p {
-      font-size: 0.9rem;
-      color: var(--text-sub);
-      margin-bottom: 12px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .email-link {
-      display: inline-block;
-      background-color: var(--accent);
-      color: #121316;
-      font-weight: 600;
-      padding: 10px 20px;
-      border-radius: 8px;
+      color: var(--accent);
       text-decoration: none;
-      font-size: 0.9rem;
-      transition: background-color 0.15s ease;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: opacity 0.2s;
     }
 
     .email-link:hover {
-      background-color: var(--accent-hover);
-    }
-
-    footer {
-      text-align: center;
-      font-size: 0.8rem;
-      color: var(--text-sub);
-      margin-top: 16px;
+      text-decoration: underline;
+      opacity: 0.85;
     }
   </style>
 </head>
 <body>
 
   <main class="container">
-    <!-- Profile -->
-    <header class="profile">
-      <img src="profile.png" alt="Aveonim Profile" class="avatar">
-      <div>
-        <h1>Aveonim</h1>
-        <p>Simple tools, TV apps, and useful browser extensions.</p>
-      </div>
-    </header>
+    <div class="avatar-wrapper">
+      <img src="profile.png" alt="Aveonim" class="avatar">
+      <span class="badge">🛠️</span>
+    </div>
 
-    <!-- Projects -->
-    <section>
-      <h2 class="section-title">Projects & Releases</h2>
-      <div class="card-list">
-        <!-- 예시 1: 확장 프로그램 -->
-        <a href="#" class="card" target="_blank" rel="noopener noreferrer">
-          <div class="card-info">
-            <h3>ushot</h3>
-            <p>Chrome Extension</p>
-          </div>
-          <span class="arrow">→</span>
-        </a>
+    <div>
+      <span class="status-tag">UNDER CONSTRUCTION</span>
+      <h1>열심히 공사중입니다</h1>
+      <p>
+        아버님이 지팡이를 짚고 열심히 키보드를 두드리는 중입니다.<br>
+        더 편리한 도구와 프로젝트들로 곧 찾아오겠습니다.
+      </p>
+    </div>
 
-        <!-- 예시 2: TV 앱 / 깃허브 저장소 -->
-        <a href="#" class="card" target="_blank" rel="noopener noreferrer">
-          <div class="card-info">
-            <h3>TV App Project</h3>
-            <p>Smart TV application & utilities</p>
-          </div>
-          <span class="arrow">→</span>
-        </a>
-
-        <!-- 깃허브 메인 링크 -->
-        <a href="https://github.com" class="card" target="_blank" rel="noopener noreferrer">
-          <div class="card-info">
-            <h3>GitHub Profile</h3>
-            <p>Explore source code and repositories</p>
-          </div>
-          <span class="arrow">→</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- Support / Contact -->
-    <section class="contact-box">
-      <h2 class="section-title" style="justify-content: center;">Support & Inquiries</h2>
-      <p>버그 리포트나 기능 제안, 문의사항은 아래 메일로 연락해 주세요.</p>
+    <div class="contact">
+      <div class="contact-label">Contact & Support</div>
       <a href="mailto:aveonim.cane@gmail.com" class="email-link">aveonim.cane@gmail.com</a>
-    </section>
-
-    <footer>
-      © Aveonim. Powered by GitHub Pages.
-    </footer>
+    </div>
   </main>
 
 </body>
