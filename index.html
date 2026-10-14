@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aveonim | 공사중</title>
+  <title>Aveonim</title>
   <style>
     :root {
       --bg: #121316;
-      --card-bg: #1c1e24;
-      --text-main: #f0f2f5;
-      --text-sub: #9ba1b0;
-      --accent: #e5a93c; /* 머스타드 웜 옐로우 */
+      --card: #1c1e24;
+      --text: #f0f2f5;
+      --sub: #9ba1b0;
+      --accent: #b83a4b; /* 아버님 버건디 가디건 톤 */
       --border: #2e323b;
     }
 
@@ -21,126 +21,77 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: var(--bg);
-      color: var(--text-main);
+      color: var(--text);
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      padding: 24px;
+      padding: 20px;
     }
 
-    .container {
-      background-color: var(--card-bg);
+    .card {
+      background-color: var(--card);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 48px 32px;
-      max-width: 520px;
+      padding: 40px 24px;
+      max-width: 420px;
       width: 100%;
       text-align: center;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     }
 
-    .avatar-wrapper {
-      position: relative;
-      display: inline-block;
+    .avatar {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--border);
       margin-bottom: 24px;
     }
 
-    .avatar {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid var(--accent);
-      display: block;
-    }
-
-    .badge {
-      position: absolute;
-      bottom: -6px;
-      right: -6px;
-      background-color: var(--accent);
-      color: #121316;
-      font-size: 1.1rem;
-      padding: 4px 8px;
-      border-radius: 12px;
-      border: 2px solid var(--card-bg);
-    }
-
     h1 {
-      font-size: 1.7rem;
+      font-size: 1.5rem;
       font-weight: 700;
-      margin-bottom: 12px;
       letter-spacing: -0.5px;
+      margin-bottom: 8px;
     }
 
-    .status-tag {
+    .status {
       display: inline-block;
-      background-color: rgba(229, 169, 60, 0.15);
-      color: var(--accent);
-      font-size: 0.85rem;
-      font-weight: 600;
-      padding: 6px 14px;
-      border-radius: 20px;
-      margin-bottom: 18px;
-    }
-
-    p {
-      color: var(--text-sub);
       font-size: 0.95rem;
-      line-height: 1.6;
+      color: var(--accent);
+      font-weight: 600;
       margin-bottom: 28px;
     }
 
     .contact {
       border-top: 1px solid var(--border);
-      padding-top: 24px;
+      padding-top: 20px;
     }
 
-    .contact-label {
-      font-size: 0.8rem;
-      color: var(--text-sub);
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .email-link {
-      color: var(--accent);
+    .email {
+      color: var(--sub);
       text-decoration: none;
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: opacity 0.2s;
+      font-size: 0.85rem;
+      transition: color 0.2s;
     }
 
-    .email-link:hover {
-      text-decoration: underline;
-      opacity: 0.85;
+    .email:hover {
+      color: var(--text);
     }
   </style>
 </head>
 <body>
 
-  <main class="container">
-    <div class="avatar-wrapper">
-      <img src="profile.png" alt="Aveonim" class="avatar">
-      <span class="badge">🛠️</span>
-    </div>
-
-    <div>
-      <span class="status-tag">UNDER CONSTRUCTION</span>
-      <h1>열심히 공사중입니다</h1>
-      <p>
-        아버님이 지팡이를 짚고 열심히 키보드를 두드리는 중입니다.<br>
-        더 편리한 도구와 프로젝트들로 곧 찾아오겠습니다.
-      </p>
-    </div>
+  <main class="card">
+    <img src="profile.png" alt="Aveonim" class="avatar">
+    <h1>Aveonim</h1>
+    <span class="status">Coffee Time ☕</span>
 
     <div class="contact">
-      <div class="contact-label">Contact & Support</div>
-      <a href="mailto:aveonim.cane@gmail.com" class="email-link">aveonim.cane@gmail.com</a>
+      <a href="mailto:aveonim.cane@gmail.com" class="email">aveonim.cane@gmail.com</a>
     </div>
   </main>
 
