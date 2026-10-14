@@ -1,7 +1,7 @@
 :root {
   /* Solid Glass 테마 디자인 토큰 */
   --font-sans: 'Geist', 'Inter', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'Geist Mono', 'Fira Code', 'Courier New', monospace;
+  --font-mono: 'D2Coding', 'Geist Mono', 'Fira Code', 'Courier New', monospace;
 
   /* 페이지 배경 및 스모키 글라스 계층 */
   --bg-page: #0d0f13;
@@ -493,7 +493,7 @@ input[type="range"] {
   background-color: var(--bg-editor);
   color: #e2e8f0;
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.6;
   padding: 16px 20px;
   border: none;
@@ -644,13 +644,13 @@ input[type="range"] {
   flex-direction: column;
   width: 100%;
   font-family: var(--font-mono);
-  font-size: 15px;
+  font-size: 12px;
   line-height: 1.6;
 }
 
 .code-line {
   display: flex;
-  align-items: flex-start;
+  align-items: baseline;
   width: 100%;
 }
 
@@ -663,7 +663,7 @@ input[type="range"] {
   border-right: 1px solid rgba(255, 255, 255, 0.08);
   color: #64748b;
   flex-shrink: 0;
-  font-size: 13px;
+  font-size: inherit;
   line-height: inherit;
 }
 
@@ -677,6 +677,9 @@ input[type="range"] {
   padding: 0;
   background: transparent !important;
   color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
   white-space: pre-wrap;
   word-break: break-all;
   overflow-wrap: break-word;
