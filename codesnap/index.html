@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code & Text to Image Generator</title>
+  <meta name="description" content="플레인 텍스트 및 YAML, JSON, 파이썬 등 소스 코드를 구문 강조된 고해상도 이미지로 변환하고 저장하는 웹 애플리케이션">
+
+  <!-- Google Fonts: Geist, Geist Mono, Inter, Fira Code, Noto Sans KR -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Geist+Mono:wght@400;500;600&family=Geist:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Highlight.js Themes -->
+  <link id="hljs-theme-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+  <link id="hljs-theme-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css" disabled>
+
+  <!-- Highlight.js Core & Common Languages -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <!-- Additional Languages like YAML -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
+
+  <!-- html2canvas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- 사이드바 제어 패널 -->
+    <aside class="control-panel">
+      <header class="panel-header">
+        <div class="panel-header-row">
+          <h1 class="app-title">CodeSnap Studio</h1>
+          <div class="lang-switch-capsule" role="group" aria-label="Language selection">
+            <button type="button" class="lang-btn active" data-lang="ko" id="lang-btn-ko">KR</button>
+            <button type="button" class="lang-btn" data-lang="en" id="lang-btn-en">EN</button>
+          </div>
+        </div>
+        <p class="app-subtitle" data-i18n="appSubtitle">스모키 글라스 감성의 고해상도 코드 캡처</p>
+      </header>
+
+      <!-- 제목 섹션 및 헤더 표시 체크박스 -->
+      <section class="control-group">
+        <label for="title-input" class="group-label" data-i18n="labelTitle">제목</label>
+        <input type="text" id="title-input" class="custom-input" placeholder="예: config.yaml, server.js" value="config.yaml" data-i18n-ph="placeholderTitle">
+        <label class="checkbox-label" style="margin-top: 4px;">
+          <input type="checkbox" id="window-header-toggle" checked>
+          <span data-i18n="labelWindowHeader">상단 헤더(제목 표시줄) 포함</span>
+        </label>
+      </section>
+
+      <!-- 언어 및 형식 섹션 및 줄 번호 체크박스 -->
+      <section class="control-group">
+        <label for="language-select" class="group-label" data-i18n="labelLanguage">언어 및 형식</label>
+        <select id="language-select" class="custom-select">
+          <option value="auto">자동 감지 (Auto Detect)</option>
+          <option value="plaintext">일반 텍스트 (Plain Text)</option>
+          <option value="yaml">YAML (.yaml, .yml)</option>
+          <option value="json">JSON (.json)</option>
+          <option value="javascript">JavaScript / TypeScript</option>
+          <option value="python">Python</option>
+          <option value="bash">Bash / Shell</option>
+          <option value="html">HTML / XML</option>
+          <option value="css">CSS / SCSS</option>
+          <option value="sql">SQL</option>
+          <option value="markdown">Markdown</option>
+          <option value="dockerfile">Dockerfile</option>
+        </select>
+        <label class="checkbox-label" style="margin-top: 4px;">
+          <input type="checkbox" id="line-numbers-toggle" checked>
+          <span data-i18n="labelLineNumbers">줄 번호 표시</span>
+        </label>
+      </section>
+
+      <section class="control-group">
+        <label class="group-label" data-i18n="labelBackground">배경 스타일</label>
+        <div class="gradient-preset-grid" id="gradient-presets">
+          <!-- 1. 옵시디언 글라스 (기본) -->
+          <button type="button" class="preset-btn active" title="옵시디언 글라스" data-gradient="linear-gradient(145deg, #121418, #1c2026)" style="background: linear-gradient(145deg, #121418, #1c2026);"></button>
+          <button type="button" class="preset-btn" title="미스틱 오로라" data-gradient="linear-gradient(145deg, #0f172a, #1e293b)" style="background: linear-gradient(145deg, #0f172a, #1e293b);"></button>
+          <button type="button" class="preset-btn" title="에메랄드 스모크" data-gradient="linear-gradient(145deg, #06201b, #0e3d34)" style="background: linear-gradient(145deg, #06201b, #0e3d34);"></button>
+          <button type="button" class="preset-btn" title="사파이어 코발트" data-gradient="linear-gradient(145deg, #0b1a30, #14325a)" style="background: linear-gradient(145deg, #0b1a30, #14325a);"></button>
+          <button type="button" class="preset-btn" title="딥 앰버 글라스" data-gradient="linear-gradient(145deg, #24140b, #432108)" style="background: linear-gradient(145deg, #24140b, #432108);"></button>
+          <button type="button" class="preset-btn" title="벨벳 플럼" data-gradient="linear-gradient(145deg, #1f0d1e, #3c1439)" style="background: linear-gradient(145deg, #1f0d1e, #3c1439);"></button>
+          <button type="button" class="preset-btn" title="프로스티드 실버" data-gradient="linear-gradient(145deg, #e2e8f0, #cbd5e1)" style="background: linear-gradient(145deg, #e2e8f0, #cbd5e1);"></button>
+          <!-- 8. 투명 배경 -->
+          <button type="button" class="preset-btn" title="투명 배경" data-gradient="transparent" style="background: repeating-conic-gradient(#555 0% 25%, #333 0% 50%) 50% / 10px 10px;"></button>
+        </div>
+      </section>
+
+      <section class="control-group">
+        <label class="group-label" data-i18n="labelWindowStyle">윈도우 스타일</label>
+        <div class="window-style-tabs" id="window-style-tabs">
+          <button type="button" class="style-tab-btn active" data-style="windows" title="Windows 스타일">
+            <span class="tab-preview win-preview">
+              <svg width="8" height="8" viewBox="0 0 10 10"><path fill="currentColor" d="M0,8 H10 V9 H0 Z"/></svg>
+              <svg width="8" height="8" viewBox="0 0 10 10"><path fill="none" stroke="currentColor" stroke-width="1.2" d="M1.5,1.5 H8.5 V8.5 H1.5 Z"/></svg>
+              <svg width="8" height="8" viewBox="0 0 10 10"><path fill="none" stroke="currentColor" stroke-width="1.4" d="M1,1 L9,9 M9,1 L1,9"/></svg>
+            </span>
+            <span class="tab-label">Windows</span>
+          </button>
+          <button type="button" class="style-tab-btn" data-style="mac" title="macOS 스타일">
+            <span class="tab-preview mac-preview">
+              <span class="mini-dot mini-red"></span>
+              <span class="mini-dot mini-yellow"></span>
+              <span class="mini-dot mini-green"></span>
+            </span>
+            <span class="tab-label">macOS</span>
+          </button>
+          <button type="button" class="style-tab-btn" data-style="none" title="버튼 없음">
+            <span class="tab-preview none-preview">
+              <span class="none-dash"></span>
+            </span>
+            <span class="tab-label" data-i18n="styleNone">없음</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="control-group">
+        <label for="theme-select" class="group-label" data-i18n="labelTheme">코드 테마</label>
+        <select id="theme-select" class="custom-select">
+          <option value="atom-one-dark">One Dark (Dark)</option>
+          <option value="atom-one-light">One Light (Light)</option>
+          <option value="monokai-sublime">Monokai Sublime</option>
+          <option value="github-dark">GitHub Dark</option>
+          <option value="github">GitHub Light</option>
+        </select>
+      </section>
+
+      <section class="control-group range-group">
+        <div class="range-header">
+          <label for="width-range" class="group-label" data-i18n="labelWidth">창 너비 (Width)</label>
+          <span id="width-val" class="range-indicator">자동 (Auto)</span>
+        </div>
+        <input type="range" id="width-range" min="300" max="1400" step="20" value="700">
+        <label class="checkbox-label" style="margin-top: 4px;">
+          <input type="checkbox" id="auto-width-toggle" checked>
+          <span data-i18n="labelAutoWidth">내용에 맞게 너비 자동 조절 (Auto)</span>
+        </label>
+      </section>
+
+      <section class="control-group range-group">
+        <div class="range-header">
+          <label for="padding-range" class="group-label" data-i18n="labelPadding">외부 여백 (Padding)</label>
+          <span id="padding-val" class="range-indicator">24px</span>
+        </div>
+        <input type="range" id="padding-range" min="0" max="96" step="4" value="24">
+      </section>
+
+      <section class="control-group range-group">
+        <div class="range-header">
+          <label for="font-size-range" class="group-label" data-i18n="labelFontSize">글자 크기 (Font Size)</label>
+          <span id="font-size-val" class="range-indicator">15px</span>
+        </div>
+        <input type="range" id="font-size-range" min="12" max="24" step="1" value="15">
+      </section>
+
+      <section class="control-group">
+        <label for="format-select" class="group-label" data-i18n="labelFormat">저장 포맷 및 품질</label>
+        <select id="format-select" class="custom-select">
+          <option value="jpeg-80">JPEG (80% - 권장, 초경량)</option>
+          <option value="jpeg-90">JPEG (90% - 고화질)</option>
+          <option value="png">PNG (무손실 / 투명 지원)</option>
+        </select>
+      </section>
+
+      <section class="action-section">
+        <button type="button" id="copy-btn" class="btn btn-secondary">
+          <span data-i18n="btnCopy">복사</span>
+        </button>
+        <button type="button" id="export-btn" class="btn btn-primary">
+          <span id="export-btn-text">저장 (JPEG)</span>
+        </button>
+      </section>
+
+      <div id="status-message" class="status-message" aria-live="polite"></div>
+    </aside>
+
+    <!-- 메인 영역: 편집기 및 미리보기 -->
+    <main class="main-content">
+      <!-- 텍스트 입력창 -->
+      <section class="editor-section">
+        <div class="section-title-bar">
+          <span class="bar-title" data-i18n="barTitleEditor">텍스트 입력</span>
+          <button type="button" id="sample-yaml-btn" class="mini-btn">YAML</button>
+          <button type="button" id="sample-json-btn" class="mini-btn">JSON</button>
+          <button type="button" id="sample-py-btn" class="mini-btn">Python</button>
+          <button type="button" id="clear-text-btn" class="mini-btn" data-i18n="clearText">지우기</button>
+        </div>
+        <textarea id="text-input" class="text-editor" placeholder="여기에 소스코드나 텍스트를 입력하세요..." spellcheck="false" data-i18n-ph="placeholderEditor"></textarea>
+      </section>
+
+      <!-- 캡처 미리보기 영역 -->
+      <section class="preview-section">
+        <div class="section-title-bar">
+          <span class="bar-title" data-i18n="barTitlePreview">미리보기 (저장 대상)</span>
+          <span class="preview-guide" data-i18n="previewGuide">아래 렌더링 영역이 그대로 이미지로 생성됩니다.</span>
+        </div>
+
+        <div class="preview-scroll-wrapper">
+          <!-- 실제 캡처 대상 노드 시작 -->
+          <div id="capture-container" class="capture-container" style="background: linear-gradient(145deg, #121418, #1c2026);">
+            <div id="window-box" class="window-box style-windows">
+              <div id="window-header" class="window-header">
+                <!-- Mac 스타일 컨트롤 (좌측) -->
+                <div class="mac-buttons" id="mac-controls">
+                  <span class="mac-dot dot-red"></span>
+                  <span class="mac-dot dot-yellow"></span>
+                  <span class="mac-dot dot-green"></span>
+                </div>
+
+                <!-- 창 제목 -->
+                <div id="window-title" class="window-title">config.yaml</div>
+
+                <!-- Windows 스타일 컨트롤 (우측) -->
+                <div class="windows-buttons" id="windows-controls">
+                  <span class="win-btn win-minimize">
+                    <svg width="10" height="10" viewBox="0 0 10 10"><path fill="currentColor" d="M0,8 H10 V9 H0 Z"/></svg>
+                  </span>
+                  <span class="win-btn win-maximize">
+                    <svg width="10" height="10" viewBox="0 0 10 10"><path fill="none" stroke="currentColor" stroke-width="1" d="M1.5,1.5 H8.5 V8.5 H1.5 Z"/></svg>
+                  </span>
+                  <span class="win-btn win-close">
+                    <svg width="10" height="10" viewBox="0 0 10 10"><path fill="none" stroke="currentColor" stroke-width="1.2" d="M1,1 L9,9 M9,1 L1,9"/></svg>
+                  </span>
+                </div>
+              </div>
+
+              <div class="code-viewport" id="code-viewport">
+                <div id="lines-container" class="lines-container"></div>
+              </div>
+            </div>
+          </div>
+          <!-- 실제 캡처 대상 노드 끝 -->
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
